@@ -9,7 +9,7 @@ RenderArea::RenderArea(QWidget *parent) :
     mShapeColor(255, 255, 255),
     mShape(Astroid)
 {
-
+on_shape_changed();
 }
 
 QSize RenderArea::minimumSizeHint() const
@@ -21,6 +21,57 @@ QSize RenderArea::sizeHint() const
     return QSize(400, 200);
 }
 
+void RenderArea::on_shape_changed ()
+{
+    //Do something different based on each shape
+    switch (mShape)
+    {
+    case Astroid:
+        // load astroid values
+        mScale = 40;
+        mIntervalLength = 2 * M_PI;
+        mStepCount = 256;
+        break;
+    case Cycloid:
+        break;
+
+    case HuygensCycloid:
+        break;
+
+    case HypoCycloid:
+        break;
+
+    case FutureCurve:
+        break;
+
+    default:
+        break;
+    }
+}
+QPointF RenderArea::compute (float t)
+{
+    switch (mShape)
+    {
+    case Astroid:
+        return compute_astroid(t);
+        break;
+    case Cycloid:
+        return compute_cycloid (t);
+        break;
+    case HuygensCycloid:
+        return compute_huygens (t);
+        break;
+    case HypoCycloid:
+        return compute_hypo (t);
+        break;
+    case FutureCurve:
+        return compute_future_curve(t);
+        break;
+    default:
+        break;
+    }
+    return QPointF (0, 0);
+}
 // We will compute the astroid funcion here
 QPointF RenderArea::compute_astroid(float t)
 {
@@ -31,6 +82,41 @@ QPointF RenderArea::compute_astroid(float t)
 
  return QPointF (x, y);
 }
+// We will compute the cycloid funcion here
+QPointF RenderArea::compute_cycloid(float t)
+{
+ float cos_t = cos(t);
+ float sin_t = sin(t);
+ float x = 2 * cos_t * cos_t * cos_t;  //pow (cos_t, 3)
+ float y = 2 * sin_t * sin_t * sin_t;  //pow (sin_t, 3);
+
+ return QPointF (x, y);
+}
+// We will compute the huygens funcion here
+QPointF RenderArea::compute_huygens(float t)
+{
+ float cos_t = cos(t);
+ float sin_t = sin(t);
+ float x = 2 * cos_t * cos_t * cos_t;  //pow (cos_t, 3)
+ float y = 2 * sin_t * sin_t * sin_t;  //pow (sin_t, 3);
+
+ return QPointF (x, y);
+}
+// We will compute the hypo funcion here
+QPointF RenderArea::compute_hypo(float t)
+{
+ float cos_t = cos(t);
+ float sin_t = sin(t);
+ float x = 2 * cos_t * cos_t * cos_t;  //pow (cos_t, 3)
+ float y = 2 * sin_t * sin_t * sin_t;  //pow (sin_t, 3);
+
+ return QPointF (x, y);
+}
+
+QPointF RenderArea::compute_future_curve (float t)
+{
+    //TBD
+}
 
 void RenderArea::paintEvent(QPaintEvent *event)
 {
@@ -40,22 +126,7 @@ void RenderArea::paintEvent(QPaintEvent *event)
     painter.setRenderHint(QPainter::Antialiasing, true);
 
 
-    switch (mShape){
-        case Astroid:
-            mBackgroundColor = Qt::red;
-            break;
-        case Cycloid:
-            mBackgroundColor = Qt::green;
-            break;
-        case HuygensCycloid:
-            mBackgroundColor = Qt::blue;
-            break;
-        case HypoCycloid:
-            mBackgroundColor = Qt::yellow;
-            break;
-        default:
-            break;
-    }
+
     painter.setBrush(mBackgroundColor);
     painter.setPen(mShapeColor);
 
@@ -66,18 +137,19 @@ void RenderArea::paintEvent(QPaintEvent *event)
     //Drawing Line Example
     //painter.drawLine(this->rect().topLeft(), this->rect().bottomRight());
 
-    int stepCount = 256;
-    float scale = 40;
-    float intervalLength = 2 * M_PI;
-    float step = intervalLength / stepCount;
 
-    for(float t = 0; t < intervalLength; t += step)
+
+
+    float step = mIntervalLength / mStepCount;
+
+    for(float t = 0; t < mIntervalLength; t += step)
     {
         QPointF point = compute_astroid (t);
 
+
         QPoint pixel;
-        pixel.setX(point.x() * scale + center.x());
-        pixel.setY(point.y() * scale + center.y());
+        pixel.setX(point.x() * mScale + center.x());
+        pixel.setY(point.y() * mScale + center.y());
 
         painter.drawPoint((pixel));
     }
