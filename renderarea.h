@@ -17,17 +17,20 @@ public:
     void setBackgroundColor (QColor color) { mBackgroundColor = color; }  //setter
     QColor backgroundColor () const { return mBackgroundColor; }  //getter
 
-    void setShape (ShapeType shape) { mShape = shape; on_shape_changed ();}
+    void setShapeColor (QColor color) { mShapeColor = color; }
+    QColor shapeColor () const {return mShapeColor; }
+
+    void setShape (ShapeType shape) { mShape = shape; on_shape_changed (); }
     ShapeType shape () const { return mShape; }
 
-    void setScale (float scale) { mScale = scale; repaint();}
+    void setScale (float scale) { mScale = scale; repaint(); }
     float scale () const { return mScale; }
 
-    void setIntervalLength (float intervalLength) { mIntervalLength = intervalLength; repaint();}
+    void setIntervalLength (float intervalLength) { mIntervalLength = intervalLength; repaint(); }
     float intervalLength () const { return mIntervalLength; }
 
-    void setStepCount (int count) { mStepCount = count; repaint();}
-    int stepCount () const {return mStepCount;}
+    void setStepCount (int count) { mStepCount = count; repaint(); }
+    int stepCount () const { return mStepCount; }
 
 protected:
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
