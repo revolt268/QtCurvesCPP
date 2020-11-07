@@ -147,6 +147,10 @@ void RenderArea::paintEvent(QPaintEvent *event)
     painter.drawRect(this->rect());
 
     QPoint center = this->rect().center();
+    QPointF prevPoint = compute (0);
+    QPoint prevPixel;
+    prevPixel.setX(prevPoint.x() * mScale + center.x());
+    prevPixel.setY(prevPoint.y() * mScale + center.y());
     //Drawing Line Example
     //painter.drawLine(this->rect().topLeft(), this->rect().bottomRight());
 
@@ -164,6 +168,9 @@ void RenderArea::paintEvent(QPaintEvent *event)
         pixel.setX(point.x() * mScale + center.x());
         pixel.setY(point.y() * mScale + center.y());
 
-        painter.drawPoint((pixel));
+        //painter.drawPoint((pixel));
+        painter.drawLine(pixel, prevPixel);
+
+        prevPixel = pixel;
     }
 }
