@@ -33,12 +33,21 @@ void RenderArea::on_shape_changed ()
         mStepCount = 256;
         break;
     case Cycloid:
+        mScale = 4;
+        mIntervalLength = 6 * M_PI;
+        mStepCount = 128;
         break;
 
     case HuygensCycloid:
+        mScale = 4;
+        mIntervalLength = 4 * M_PI;
+        mStepCount = 256;
         break;
 
     case HypoCycloid:
+        mScale = 15;
+        mIntervalLength = 2 * M_PI;
+        mStepCount = 256;
         break;
 
     case FutureCurve:
@@ -48,6 +57,7 @@ void RenderArea::on_shape_changed ()
         break;
     }
 }
+// Dispatcher Function
 QPointF RenderArea::compute (float t)
 {
     switch (mShape)
@@ -85,37 +95,36 @@ QPointF RenderArea::compute_astroid(float t)
 // We will compute the cycloid funcion here
 QPointF RenderArea::compute_cycloid(float t)
 {
- float cos_t = cos(t);
- float sin_t = sin(t);
- float x = 2 * cos_t * cos_t * cos_t;  //pow (cos_t, 3)
- float y = 2 * sin_t * sin_t * sin_t;  //pow (sin_t, 3);
-
- return QPointF (x, y);
+ return QPointF (
+         1.5 * (1 - cos (t)), // X
+         1.5 * (t - sin (t))  // Y
+    );
 }
 // We will compute the huygens funcion here
 QPointF RenderArea::compute_huygens(float t)
 {
- float cos_t = cos(t);
- float sin_t = sin(t);
- float x = 2 * cos_t * cos_t * cos_t;  //pow (cos_t, 3)
- float y = 2 * sin_t * sin_t * sin_t;  //pow (sin_t, 3);
+    return  QPointF(
+            4 * (3 * cos (t) - cos (3 * t)), // X
+            4 * (3 * sin (t) - sin (3 * t))  // Y
+    );
 
- return QPointF (x, y);
 }
 // We will compute the hypo funcion here
 QPointF RenderArea::compute_hypo(float t)
 {
- float cos_t = cos(t);
- float sin_t = sin(t);
- float x = 2 * cos_t * cos_t * cos_t;  //pow (cos_t, 3)
- float y = 2 * sin_t * sin_t * sin_t;  //pow (sin_t, 3);
-
- return QPointF (x, y);
+    return  QPointF(
+            1.5 * (2 * cos (t) + cos (2 * t)), // X
+            1.5 * (2 * sin (t) - sin (2 * t))  // Y
+    );
 }
 
 QPointF RenderArea::compute_future_curve (float t)
 {
     //TBD
+    /*
+     * x = fx (t)
+     * y = fy (t)
+     */
 }
 
 void RenderArea::paintEvent(QPaintEvent *event)
@@ -144,7 +153,7 @@ void RenderArea::paintEvent(QPaintEvent *event)
 
     for(float t = 0; t < mIntervalLength; t += step)
     {
-        QPointF point = compute_astroid (t);
+        QPointF point = compute (t);
 
 
         QPoint pixel;

@@ -30,7 +30,7 @@ void MainWindow::on_btnCycloid_clicked()
     this->ui->renderArea->repaint();
 }
 
-void MainWindow::on_brnHuygensCycloid_clicked()
+void MainWindow::on_btnHuygensCycloid_clicked()
 {
     this->ui->renderArea->setShape(RenderArea::HuygensCycloid);
 

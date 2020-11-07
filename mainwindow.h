@@ -20,7 +20,7 @@ private slots:
 
     void on_btnCycloid_clicked();
 
-    void on_brnHuygensCycloid_clicked();
+    void on_btnHuygensCycloid_clicked();
 
     void on_btnHypoCycloid_clicked();
 

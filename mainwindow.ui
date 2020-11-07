@@ -32,12 +32,12 @@
         <item>
          <widget class="QPushButton" name="btnCycloid">
           <property name="text">
-           <string>Cucloid</string>
+           <string>Cycloid</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="brnHuygensCycloid">
+         <widget class="QPushButton" name="btnHuygensCycloid">
           <property name="text">
            <string>Huygens</string>
           </property>
