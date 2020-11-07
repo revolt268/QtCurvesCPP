@@ -6,6 +6,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    update_ui();
 }
 
 MainWindow::~MainWindow()
@@ -13,21 +15,26 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::update_ui ()
+{
+    this->ui->spinScale->setValue(this->ui->renderArea->scale());
+    this->ui->spinInterval->setValue(this->ui->renderArea->intervalLength());
+    this->ui->spinCount->setValue(this->ui->renderArea->stepCount());
+}
+
 
 void MainWindow::on_btnAstroid_clicked()
 {
     this->ui->renderArea->setShape(RenderArea::Astroid);
-    // Change background color for render area
-    // How was this done?
-    // Add a function to change the background color
-    // repaints the render area so that the color appears correctly
     this->ui->renderArea->repaint();
+    update_ui();
 }
 
 void MainWindow::on_btnCycloid_clicked()
 {
     this->ui->renderArea->setShape(RenderArea::Cycloid);
     this->ui->renderArea->repaint();
+    update_ui();
 }
 
 void MainWindow::on_btnHuygensCycloid_clicked()
@@ -35,6 +42,7 @@ void MainWindow::on_btnHuygensCycloid_clicked()
     this->ui->renderArea->setShape(RenderArea::HuygensCycloid);
 
     this->ui->renderArea->repaint();
+    update_ui();
 }
 
 void MainWindow::on_btnHypoCycloid_clicked()
@@ -42,6 +50,7 @@ void MainWindow::on_btnHypoCycloid_clicked()
     this->ui->renderArea->setShape(RenderArea::HypoCycloid);
 
     this->ui->renderArea->repaint();
+    update_ui();
 }
 
 void MainWindow::on_btnLine_clicked()
@@ -49,4 +58,22 @@ void MainWindow::on_btnLine_clicked()
     this->ui->renderArea->setShape(RenderArea::Line);
 
     this->ui->renderArea->repaint();
+    update_ui();
+}
+
+void MainWindow::on_spinScale_valueChanged(double scale)
+{
+    this->ui->renderArea->setScale (scale);
+}
+
+
+void MainWindow::on_spinInterval_valueChanged(double arg1)
+{
+    this->ui->renderArea->setIntervalLength(arg1);
+}
+
+
+void MainWindow::on_spinCount_valueChanged(int count)
+{
+    this->ui->renderArea->setStepCount (count);
 }

@@ -151,11 +151,6 @@ void RenderArea::paintEvent(QPaintEvent *event)
     QPoint prevPixel;
     prevPixel.setX(prevPoint.x() * mScale + center.x());
     prevPixel.setY(prevPoint.y() * mScale + center.y());
-    //Drawing Line Example
-    //painter.drawLine(this->rect().topLeft(), this->rect().bottomRight());
-
-
-
 
     float step = mIntervalLength / mStepCount;
 
@@ -168,7 +163,6 @@ void RenderArea::paintEvent(QPaintEvent *event)
         pixel.setX(point.x() * mScale + center.x());
         pixel.setY(point.y() * mScale + center.y());
 
-        //painter.drawPoint((pixel));
         painter.drawLine(pixel, prevPixel);
 
         prevPixel = pixel;
